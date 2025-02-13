@@ -4,11 +4,26 @@ from nltk.corpus import reuters, stopwords
 from gensim.models import Word2Vec
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
+import os
+from nltk.data import find
 
-# Force re-download of the Reuters dataset
-nltk.download('reuters', force=True)
-nltk.download('punkt')
-nltk.download('stopwords')
+# Function to check if an NLTK dataset is already installed
+def ensure_nltk_resource(resource):
+    try:
+        find(resource)  # Check if resource exists
+    except LookupError:
+        nltk.download(resource)  # Download only if missing
+
+# Ensure required NLTK datasets are available
+ensure_nltk_resource('tokenizers/punkt')
+ensure_nltk_resource('corpora/stopwords')
+ensure_nltk_resource('corpora/reuters')
+
+
+# # Force re-download of the Reuters dataset
+# nltk.download('reuters', force=True)
+# nltk.download('punkt')
+# nltk.download('stopwords')
 
 
 # Load Reuters Corpus and Preprocess
